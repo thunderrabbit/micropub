@@ -2,7 +2,7 @@
 
 # we can't do anything without a config file
 if ( ! file_exists('config.php') ) {
-    die;
+    quit(400, 'no_config', 'Could not find file config.php');
 }
 $config = include_once './config.php';
 
