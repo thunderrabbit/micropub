@@ -20,6 +20,7 @@ function quit ($code = 400, $error = '', $description = 'An error occurred.', $l
     header("HTTP/1.1 " . http_status($code));
     if ( $code >= 400 ) {
         echo json_encode(['error' => $error, 'error_description' => $description]);
+        error_log($error . " " . $description . "\n", 3, "log/error_log_" . date("d-M-Y") . ".log");   // write error to file
     } elseif ($code == 200 || $code == 201 || $code == 202) {
         if (!empty($location)) {
             header('Location: ' . $location);
@@ -82,7 +83,7 @@ function indieAuth($endpoint, $token, $me = '') {
     if ( $me == '' ) { $me = $_SERVER['HTTP_HOST']; }
     $ch = curl_init($endpoint);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-    curl_setopt($ch, CURLOPT_HTTPHEADER, 
+    curl_setopt($ch, CURLOPT_HTTPHEADER,
         Array("Accept: application/json","Authorization: $token"));
     $token_response = strval(curl_exec($ch));
     curl_close($ch);
