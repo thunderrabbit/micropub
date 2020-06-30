@@ -267,7 +267,7 @@ function create($request, $photos = []) {
 
     # all items need a date
     if (!isset($properties['date'])) {
-        $properties['date'] = date('Y-m-d H:i:s');
+        $properties['date'] = date($config['frontmatter_date_format']);
         # micropub spec suggests 'published' for create time.
         # however, Hugo uses this as a boolean. grab it before
         # we overwrite it (if present).

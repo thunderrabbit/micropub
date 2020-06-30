@@ -22,6 +22,9 @@ $config = array(
     # trailing slash required.
     'source_path' => '/var/www/skippy/',
 
+    # use this date format in the frontmatter for entries
+    'frontmatter_date_format' => 'Y-m-d H:i:s',
+
     # different types of content may have different paths.
     # by default, articles are in the root of the /content/ directory, so
     # are not included here.
