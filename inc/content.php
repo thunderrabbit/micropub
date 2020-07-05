@@ -140,7 +140,7 @@ function post_type_discovery($properties) {
 # to be appended to a data file.
 function build_post( $front_matter, $content) {
     ksort($front_matter);
-    if ($front_matter['posttype'] == 'article') {
+    if (in_array($front_matter['posttype'], ['article', 'journal'])) {
       return "---\n" . Yaml::dump($front_matter) . "---\n" . $content . "\n";
     } else {
       $front_matter['content'] = $content;
