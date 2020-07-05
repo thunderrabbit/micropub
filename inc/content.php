@@ -116,6 +116,7 @@ function posttype_source_function($posttype, $properties, $content) {
 # returns the MF2 post type
 function post_type_discovery($properties) {
     $vocab = array('rsvp',
+                 'journal',
                  'in-reply-to',
                  'repost-of',
                  'like-of',
