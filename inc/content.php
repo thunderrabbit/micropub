@@ -258,11 +258,11 @@ function create($request, $photos = []) {
     $properties['posttype'] = post_type_discovery($properties);
 
     # invoke any source-specific functions for this post type.
-    # articles, notes, and photos don't really have "sources", other than
+    # articles, notes, photos, and journal entries don't really have "sources", other than
     # their own content.
     # replies, reposts, likes, bookmarks, etc, should reference source URLs
     # and may interact with those sources here.
-    if (! in_array($properties['posttype'], ['article', 'note', 'photo'])) {
+    if (! in_array($properties['posttype'], ['article', 'note', 'photo', 'journal'])) {
         list($properties, $content) = posttype_source_function($properties['posttype'], $properties, $content);
     }
 
