@@ -220,8 +220,14 @@ function update($request) {
     build_site();
 }
 
-// Crate the type/date portion of a URL like this robnugen.com/journal/2020/07/05entry-title.md
-function content_date_path(string $date, string $entry_type) {
+/**
+ * content_date_path will create the type/date portion of a URL like this robnugen.com/journal/2020/07/25entry-title.md
+
+ * @param string $date will be parsed by PHP's date_parse to look for year and month in yyyy and mm format
+ * @param string $entry_type is a string to be used after /content/ in the URL
+ * @return string portion of path including $entry_type and date, e.g. journal/2020/07/25
+ */
+function content_date_path(string $date, string $entry_type): string {
   $date_parts_array = date_parse($date);
   // use today's date if date_parse cannot figure out what $date was sent to content_date_path()
   if(($date_parts_array['warning_count'] > 0) || ($date_parts_array['error_count'] > 0)) {
