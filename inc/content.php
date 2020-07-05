@@ -299,6 +299,12 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
         $properties['slug'] = $properties['name'];
     }
 
+    // entry_title is used for journal entries as the slug
+    // but the slug is not really used in journal entries (as of this writing)
+    if (isset($properties['entry_title']) && !isset($properties['slug'])) {
+        $properties['slug'] = $properties['entry_title'];
+    }
+
     if (!isset($properties['name']) && !isset($properties['slug'])) {
         # We will assign this a slug.
         # Hex value of seconds since UNIX epoch
