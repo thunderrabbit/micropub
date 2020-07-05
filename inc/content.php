@@ -220,7 +220,7 @@ function update($request) {
     build_site();
 }
 
-function create($request, $photos = []) {
+function create(\p3k\Micropub\Request $request, $photos = []) {
     global $config;
 
     $mf2 = $request->toMf2();
