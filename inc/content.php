@@ -339,7 +339,16 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
         # write_file will default to NOT overwriting existing files,
         # so we don't need to check that here.
         write_file($filename, $file_contents);
-    } else {
+    } else if ($properties['posttype'] == 'journal') {
+          # produce a file name for this post.
+          $content_date_path = content_date_path($properties['date'],$properties['posttype']);
+          $path = $config['source_path'] . "content/" . $content_date_path;                    // path in server file system
+          $url = $config['base_url'] . $content_date_path . '/' . $properties['slug'];         // sent back to Micropub client
+          $filename = $path . $properties['slug'] . '.md';
+          # write_file will default to NOT overwriting existing files,
+          # so we don't need to check that here.
+          write_file($filename, $file_contents);
+      } else {
         # this content will be appended to a data file.
         # our config file defines the content_path of the desired file.
         $content_path = $config['content_paths'][$properties['posttype']];
