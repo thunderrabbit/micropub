@@ -310,6 +310,12 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
         $properties['slug'] = $properties['name'];
     }
 
+    // My Hugo setup requires title in YAML.  This fixes that for journal entries.
+    // there may already be code that deals with that but I did not look for it
+    if (isset($properties['entry_title']) && !isset($properties['title'])) {
+        $properties['title'] = $properties['entry_title'];
+    }
+
     // entry_title is used for journal entries as the slug
     // but the slug is not really used in journal entries (as of this writing)
     if (isset($properties['entry_title']) && !isset($properties['slug'])) {
