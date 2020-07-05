@@ -220,6 +220,17 @@ function update($request) {
     build_site();
 }
 
+// Crate the type/date portion of a URL like this robnugen.com/journal/2020/07/05entry-title.md
+function content_date_path(string $date, string $entry_type) {
+  $date_parts_array = date_parse($date);
+  // use today's date if date_parse cannot figure out what $date was sent to content_date_path()
+  if(($date_parts_array['warning_count'] > 0) || ($date_parts_array['error_count'] > 0)) {
+    $date_parts_array = date_parse(date("Y-M-d"));
+  }
+  $path = sprintf($entry_type . "/%04d/%02d/%02d", $date_parts_array['year'], $date_parts_array['month'], $date_parts_array['day']);
+  return $path;
+}
+
 function create(\p3k\Micropub\Request $request, $photos = []) {
     global $config;
 
