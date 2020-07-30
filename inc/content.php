@@ -221,7 +221,11 @@ function update($request) {
 }
 
 /**
- * content_date_path will create the type/date portion of a URL like this robnugen.com/journal/2020/07/25entry-title.md
+ * content_date_path will create the type/date portion, e.g.
+ *
+ *      journal/2020/07/25
+ *
+ * of a URL like this robnugen.com/journal/2020/07/25entry-title.md
 
  * @param string $date will be parsed by PHP's date_parse to look for year and month in yyyy and mm format
  * @param string $entry_type is a string to be used after /content/ in the URL
