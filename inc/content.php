@@ -101,7 +101,7 @@ function posttype_source_function($posttype, $properties, $content) {
     # replace all hyphens with underscores, for later use
     $type = str_replace('-', '_', $posttype);
     # get the domain of the site to which we are replying, and convert
-    # all dots to underscores.
+    # all dots to underscores.  see file twitter.php  e.g.  function in_reply_to_twitter_com()
     $target = str_replace('.', '_', parse_url($properties[$posttype], PHP_URL_HOST));
     # if a function exists for this type + target combo, call it
     if (function_exists("${type}_${target}")) {
