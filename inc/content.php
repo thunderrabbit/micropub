@@ -260,7 +260,7 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
     } else {
         $content = '';
     }
-    # ensure that the properties array doesn't contain 'content'
+    # ensure that the properties array doesn't contain 'content' because it is now in $content
     unset($properties['content']);
 
     if (!empty($photos)) {
