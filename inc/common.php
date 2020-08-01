@@ -15,6 +15,11 @@ function http_status ($code) {
     return $http_codes[$code];
 }
 
+function remove_CtrlM_from_line_endings(string $content)
+{
+  return str_replace("\r", "", $content);    // remove ^M characters from line endings
+}
+
 function quit ($code = 400, $error = '', $description = 'An error occurred.', $location = '') {
     $code = (int) $code;
     header("HTTP/1.1 " . http_status($code));
