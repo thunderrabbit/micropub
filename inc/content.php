@@ -116,6 +116,7 @@ function posttype_source_function($posttype, $properties, $content) {
 # returns the MF2 post type
 function post_type_discovery($properties) {
     $vocab = array('rsvp',
+                 'dream',                  # allows calling dream_robnugen_com
                  'journal',
                  'in-reply-to',
                  'repost-of',
@@ -283,7 +284,7 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
     # their own content.
     # replies, reposts, likes, bookmarks, etc, should reference source URLs
     # and may interact with those sources here.
-    if (! in_array($properties['posttype'], ['article', 'note', 'photo', 'journal'])) {
+    if (! in_array($properties['posttype'], ['article', 'note', 'photo'])) {
         list($properties, $content) = posttype_source_function($properties['posttype'], $properties, $content);
     }
 
