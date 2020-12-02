@@ -163,7 +163,12 @@ function write_file($file, $content, $overwrite = false) {
     }
 }
 
-function delete($request) {
+/**
+ *  Delete entries, mostly by unpublishing them
+ *
+ *  @param \p3k\Micropub\Request  $request is defined in https://github.com/aaronpk/p3k-micropub
+ */
+function delete(\p3k\Micropub\Request $request) {
     global $config;
 
     $filename = str_replace($config['base_url'], $config['base_path'], $request->url);
@@ -179,7 +184,12 @@ function delete($request) {
     update($new_request);
 }
 
-function undelete($request) {
+/**
+ *  Restore entries by publishing them again
+ *
+ *  @param \p3k\Micropub\Request  $request is defined in https://github.com/aaronpk/p3k-micropub
+ */
+function undelete(\p3k\Micropub\Request $request) {
     # to undelete a post, simply set the "published" property to "true"
     $json = json_encode( array('url' => $request->url,
         'action' => 'update',
@@ -188,7 +198,12 @@ function undelete($request) {
     update($new_request);
 }
 
-function update($request) {
+/**
+ *  Update entries, which is definitely something I want to be able to do
+ *
+ *  @param \p3k\Micropub\Request  $request is defined in https://github.com/aaronpk/p3k-micropub
+ */
+function update(\p3k\Micropub\Request $request) {
     $filename = get_source_from_url($request->url);
     $original = parse_file($filename);
     foreach($request->update['replace'] as $key=>$value) {
@@ -242,6 +257,11 @@ function content_date_path(string $date, string $entry_type): string {
   return $path;
 }
 
+/**
+ *  Initially creates entries
+ *
+ *  @param \p3k\Micropub\Request  $request is defined in https://github.com/aaronpk/p3k-micropub
+ */
 function create(\p3k\Micropub\Request $request, $photos = []) {
     global $config;
 
