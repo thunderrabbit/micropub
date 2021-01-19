@@ -46,9 +46,9 @@ The Twitter source also defines `<post_type>_m_twitter_com`, which are simple wr
 See `inc/twitter.php` for the implementation details.
 
 ## How I use this
-I have my Hugo site in `/var/www/skippy.net`.  I have my [web server](https://caddyserver.com/) configured to use `/var/www/skippy.net/public` as the document root of my site.  All of `/var/www/skippy.net/content` and `/var/www/skippy.net/static` are owned by the `www-data` user, to ensure that content can be created, edited, and deleted through Micropub without permission problems.
+I have my Hugo site in `/home/barefoot_rob/mp.robnugen.com`.  I have my [web server](https://caddyserver.com/) configured to use `/home/barefoot_rob/mp.robnugen.com/public` as the document root of my site.  All of `/home/barefoot_rob/mp.robnugen.com/content` and `/home/barefoot_rob/mp.robnugen.com/static` are owned by the `www-data` user, to ensure that content can be created, edited, and deleted through Micropub without permission problems.
 
-When I create a new post, Micropub will generate the file in `/var/www/skippy.net/content/`, and then invoke Hugo, which will recreate all the content in `/var/www/skippy.net/public`.  No extra steps are required, and the new content is available.
+When I create a new post, Micropub will generate the file in `/home/barefoot_rob/mp.robnugen.com/content/`, and then invoke Hugo, which will recreate all the content in `/home/barefoot_rob/mp.robnugen.com/public`.  No extra steps are required, and the new content is available.
 
 I am making heavy use of [Hugo data files](https://gohugo.io/templates/data-templates/) with this Micropub server. Notes, photos, replies, reposts, bookmarks, and likes are all stored as YAML arrays in files in the `/data` directory. This allows new content to be appended quickly, and reduces the number of content files that Hugo needs to parse when building the site.
 
