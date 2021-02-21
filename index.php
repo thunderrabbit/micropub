@@ -101,10 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             undelete($request);
             break;
         case 'update':
-            update($request, $photo_urls);
+            update($request, $photo_urls);    // update is defined in content.php
             break;
         default:
-            create($request, $photo_urls);
+            create($request, $photo_urls);    // create is defined in content.php
             break;
     endswitch;
 } else {
