@@ -164,7 +164,7 @@ function barefoot_rob_frontmatter($front_matter)
  * @return string the content to save to the file
  */
 function build_post( $front_matter, $content) {
-    ksort($front_matter);
+    $front_matter = barefoot_rob_frontmatter($front_matter);
     if (in_array($front_matter['posttype'], ['article', 'journal'])) {
       return "---\n" . Yaml::dump($front_matter) . "---\n" . $content . "\n";
     } else {
