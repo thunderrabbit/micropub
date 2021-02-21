@@ -144,7 +144,13 @@ function post_type_discovery($properties) {
 */
 function barefoot_rob_frontmatter($front_matter)
 {
-  $preferred_journal_entry_keys = array("title", "tags", "author", "draft", "date");
+  $preferred_journal_entry_keys = array(
+    "title",
+    "tags",
+    "author",
+    "draft",
+    "date"
+  );
   $out_array = array();
   foreach ($preferred_journal_entry_keys as $fm_key) {
      if(array_key_exists($fm_key, $front_matter) && !empty($front_matter[$fm_key]))
