@@ -136,9 +136,14 @@ function post_type_discovery($properties) {
     return 'note';
 }
 
-# given an array of front matter and body content, return a full post
-# Articles are full Markdown files; everything else is just YAML blobs
-# to be appended to a data file.
+/**
+ * given an array of front matter and body content, return a full post
+ * Articles and journals are full Markdown files; previous author used a lot of YAML blobs
+ * to be appended to a data file.
+ * @param array $front_matter was called $properties outside this function; basically the meta data for the post
+ * @param string $content is a string sent as the body of the post
+ * @return string the content to save to the file
+ */
 function build_post( $front_matter, $content) {
     ksort($front_matter);
     if (in_array($front_matter['posttype'], ['article', 'journal'])) {
