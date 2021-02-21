@@ -284,6 +284,13 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
     # ensure that the properties array doesn't contain 'content' because it is now in $content
     unset($properties['content']);
 
+    /*  BEGIN filling in frontmatter for my website */
+    if(empty($properties['author']))
+    {
+      $properties['author'] = "Rob Nugen";
+    }
+    /*  END filling in frontmatter for my website */
+
     if (!empty($photos)) {
         # add uploaded photos to the front matter.
         if (!isset($properties['photo'])) {
