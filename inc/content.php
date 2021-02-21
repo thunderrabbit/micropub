@@ -136,6 +136,25 @@ function post_type_discovery($properties) {
     return 'note';
 }
 
+
+/**
+*
+*    Sort frontmatter the way I like it and strip all fields I don't care about.
+*   This is currently targetting journal entries, not blog, events, etc
+*/
+function barefoot_rob_frontmatter($front_matter)
+{
+  $preferred_journal_entry_keys = array("title", "tags", "author", "draft", "date");
+  $out_array = array();
+  foreach ($preferred_journal_entry_keys as $fm_key) {
+     if(array_key_exists($fm_key, $front_matter) && !empty($front_matter[$fm_key]))
+     {
+       $out_array[$fm_key] = $front_matter[$fm_key];
+     }
+  }
+  return $out_array;
+}
+
 /**
  * given an array of front matter and body content, return a full post
  * Articles and journals are full Markdown files; previous author used a lot of YAML blobs
