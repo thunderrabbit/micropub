@@ -149,6 +149,7 @@ function barefoot_rob_frontmatter($front_matter)
     "tags",
     "author",
     "draft",
+    "location",
     "date"
   );
   $out_array = array();
