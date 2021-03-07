@@ -103,7 +103,7 @@ function indieAuth($endpoint, $token, $me = '') {
     if (empty($response) || isset($response['error']) || ! isset($response['me']) || ! isset($response['scope']) ) {
         quit(401, 'insufficient_scope', 'The request lacks authentication credentials');
     } elseif ($response['me'] != $me) {
-        quit(401, 'insufficient_scope', 'The request lacks valid authentication credentials');
+        quit(401, 'insufficient_scope', $me . ' lacks valid authentication credentials');
     } elseif (is_array($response['scope']) && !in_array('create', $response['scope']) && !in_array('post', $response['scope'])) {
         quit(403, 'forbidden', 'Client does not have access to this resource');
     } elseif ((FALSE === stripos($response['scope'], 'create')) && (FALSE === stripos($response['scope'], 'post'))) {
