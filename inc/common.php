@@ -40,7 +40,7 @@ function show_info() {
     die();
 }
 
-function parse_request() {
+function parse_request(): \p3k\Micropub\Request {
     if ( strtolower($_SERVER['CONTENT_TYPE']) == 'application/json' || (array_key_exists('HTTP_CONTENT_TYPE', $_SERVER) && strtolower($_SERVER['HTTP_CONTENT_TYPE']) == 'application/json' )) {
         $request = \p3k\Micropub\Request::createFromJSONObject(json_decode(file_get_contents('php://input'), true));
     } else {
