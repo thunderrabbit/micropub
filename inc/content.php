@@ -459,8 +459,11 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
         }
     }
 
-    # build the site.
-    build_site();
+    # build the site (requires Quill to send 'build_site' in properties).
+    if($properties['build_site'])
+    {
+      build_site();
+    }
 
     # allow the client to move on, while we syndicate this post
     header('HTTP/1.1 201 Created');
