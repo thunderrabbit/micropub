@@ -84,8 +84,8 @@ function normalize_properties($properties) {
         }
     }
     # MF2 defines "name" instead of title, but Hugo wants "title".
-    # Only assign a title if the post has a name.
-    if (isset($props['name'])) {
+    # Only assign a title if the post has a name and no title.
+    if (isset($props['name']) && !isset($props['title'])) {
         $props['title'] = $props['name'];
     }
     return $props;
