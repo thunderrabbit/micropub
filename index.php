@@ -2,7 +2,7 @@
 
 # we can't do anything without a config file
 if ( ! file_exists('config.php') ) {
-    quit(400, 'no_config', 'Could not find file config.php');
+    die('Could not find file config.php');
 }
 $config = include_once './config.php';
 
@@ -101,10 +101,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET') {
             undelete($request);
             break;
         case 'update':
-            update($request, $photo_urls);
+            update($request, $photo_urls);    // update is defined in content.php
             break;
         default:
-            create($request, $photo_urls);
+            create($request, $photo_urls);    // create is defined in content.php
             break;
     endswitch;
 } else {

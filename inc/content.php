@@ -84,8 +84,8 @@ function normalize_properties($properties) {
         }
     }
     # MF2 defines "name" instead of title, but Hugo wants "title".
-    # Only assign a title if the post has a name.
-    if (isset($props['name'])) {
+    # Only assign a title if the post has a name and no title.
+    if (isset($props['name']) && !isset($props['title'])) {
         $props['title'] = $props['name'];
     }
     return $props;
@@ -136,11 +136,42 @@ function post_type_discovery($properties) {
     return 'note';
 }
 
-# given an array of front matter and body content, return a full post
-# Articles are full Markdown files; everything else is just YAML blobs
-# to be appended to a data file.
+
+/**
+*
+*    Sort frontmatter the way I like it and strip all fields I don't care about.
+*   This is currently targetting journal entries, not blog, events, etc
+*/
+function barefoot_rob_frontmatter($front_matter)
+{
+  $preferred_journal_entry_keys = array(
+    "title",
+    "tags",
+    "author",
+    "draft",
+    "location",
+    "date"
+  );
+  $out_array = array();
+  foreach ($preferred_journal_entry_keys as $fm_key) {
+     if(array_key_exists($fm_key, $front_matter) && !empty($front_matter[$fm_key]))
+     {
+       $out_array[$fm_key] = $front_matter[$fm_key];
+     }
+  }
+  return $out_array;
+}
+
+/**
+ * given an array of front matter and body content, return a full post
+ * Articles and journals are full Markdown files; previous author used a lot of YAML blobs
+ * to be appended to a data file.
+ * @param array $front_matter was called $properties outside this function; basically the meta data for the post
+ * @param string $content is a string sent as the body of the post
+ * @return string the content to save to the file
+ */
 function build_post( $front_matter, $content) {
-    ksort($front_matter);
+    $front_matter = barefoot_rob_frontmatter($front_matter);
     if (in_array($front_matter['posttype'], ['article', 'journal'])) {
       return "---\n" . Yaml::dump($front_matter) . "---\n" . $content . "\n";
     } else {
@@ -284,6 +315,13 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
     # ensure that the properties array doesn't contain 'content' because it is now in $content
     unset($properties['content']);
 
+    /*  BEGIN filling in frontmatter for my website */
+    if(empty($properties['author']))
+    {
+      $properties['author'] = "Rob Nugen";
+    }
+    /*  END filling in frontmatter for my website */
+
     if (!empty($photos)) {
         # add uploaded photos to the front matter.
         if (!isset($properties['photo'])) {
@@ -421,8 +459,11 @@ function create(\p3k\Micropub\Request $request, $photos = []) {
         }
     }
 
-    # build the site.
-    build_site();
+    # build the site (requires Quill to send 'build_site' in properties).
+    if($properties['build_site'])
+    {
+      build_site();
+    }
 
     # allow the client to move on, while we syndicate this post
     header('HTTP/1.1 201 Created');

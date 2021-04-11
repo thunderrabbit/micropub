@@ -40,7 +40,7 @@ function show_info() {
     die();
 }
 
-function parse_request() {
+function parse_request(): \p3k\Micropub\Request {
     if ( strtolower($_SERVER['CONTENT_TYPE']) == 'application/json' || (array_key_exists('HTTP_CONTENT_TYPE', $_SERVER) && strtolower($_SERVER['HTTP_CONTENT_TYPE']) == 'application/json' )) {
         $request = \p3k\Micropub\Request::createFromJSONObject(json_decode(file_get_contents('php://input'), true));
     } else {
@@ -103,7 +103,7 @@ function indieAuth($endpoint, $token, $me = '') {
     if (empty($response) || isset($response['error']) || ! isset($response['me']) || ! isset($response['scope']) ) {
         quit(401, 'insufficient_scope', 'The request lacks authentication credentials');
     } elseif ($response['me'] != $me) {
-        quit(401, 'insufficient_scope', 'The request lacks valid authentication credentials');
+        quit(401, 'insufficient_scope', $me . ' lacks valid authentication credentials');
     } elseif (is_array($response['scope']) && !in_array('create', $response['scope']) && !in_array('post', $response['scope'])) {
         quit(403, 'forbidden', 'Client does not have access to this resource');
     } elseif ((FALSE === stripos($response['scope'], 'create')) && (FALSE === stripos($response['scope'], 'post'))) {
